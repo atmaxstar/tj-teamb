@@ -1,16 +1,17 @@
 import React from 'react'
+import TagInput from './TagInput'
 
-const EditProfile = () => {
+type EditProfileProps = {
+  onSave: () => void;
+};
+
+const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
   return (
-    <div>
-    <div className="bg-gray-300 py-6 text-center">
-        <p className='text-2xl'>2/8（土）</p>
-        <p>今日の消費カロリー</p>
-        <h1 className="text-5xl text-yellow-500 font-bold mt-2">789kcal</h1>
-      </div>
       <div className="bg-white p-4 mt-4 flex flex-col items-center">
-        <h3 className="text-xl font-bold text-center mb-4">記録</h3>
-        <div className="mb-8">
+        <div className='mb-4'>
+        <h3 className="text-xl font-bold text-center">記録</h3>
+        </div>
+        <div className="mb-8 w-[480px]">
           <h4 className="text-lg font-semibold mb-2">カラダの記録</h4>
           <div className="flex items-center mb-2 space-x-4">
             <label className="w-28" htmlFor="weight">
@@ -45,7 +46,7 @@ const EditProfile = () => {
             </button>
             </div>
         </div>
-        <div className="mb-8">
+        <div className="mb-8 w-[480px]">
           <h4 className="text-lg font-semibold mb-2">体型記録</h4>
           <div className="flex items-center mb-2 space-x-4">
             <label className="w-28" htmlFor="chest">
@@ -79,8 +80,63 @@ const EditProfile = () => {
               記録
             </button>
             </div>
+            <div className="flex items-center mb-2 space-x-4">
+            <label className="w-28" htmlFor="hip">
+              ヒップ
+            </label>
+            <input
+              id="hip"
+              type="text"
+              placeholder="cm"
+              className="border border-gray-300 p-2 mr-2 flex-1"
+            />
+            <button
+              className="bg-black text-white px-3 py-2 rounded"
+            >
+              記録
+            </button>
+            </div>
+            <div className="flex items-center mb-2 space-x-4">
+            <label className="w-28" htmlFor="arm">
+              二の腕
+            </label>
+            <input
+              id="arm"
+              type="text"
+              placeholder="cm"
+              className="border border-gray-300 p-2 mr-2 flex-1"
+            />
+            <button
+              className="bg-black text-white px-3 py-2 rounded"
+            >
+              記録
+            </button>
+            </div>
+            <div className="flex items-center mb-2 space-x-4">
+            <label className="w-28" htmlFor="calf">
+              ふくらはぎ
+            </label>
+            <input
+              id="calf"
+              type="text"
+              placeholder="cm"
+              className="border border-gray-300 p-2 mr-2 flex-1"
+            />
+            <button
+              className="bg-black text-white px-3 py-2 rounded"
+            >
+              記録
+            </button>
+            </div>
         </div>
-      </div>
+        <div className="mb-8 w-[480px]">
+          <h4 className="text-lg font-semibold mb-2">トレーニングの記録</h4>
+          <TagInput />
+        </div>
+        <button onClick={onSave}
+        className="bg-yellow-400 text-white py-3 w-40 rounded-lg"
+        >
+          保存</button>
       </div>
   )
 }
