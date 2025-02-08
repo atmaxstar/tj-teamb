@@ -7,6 +7,7 @@ function App() {
   return (
     <>
     {page === "home" && <Home/>}
+    {page === "dashboard" && <CalorieWeightChart/>}
     </>
   )
 }
