@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Home = () => {
+const EditProfile = () => {
   return (
-    <div className="bg-white min-h-screen">
-      <div className="bg-gray-300 py-6 text-center">
+    <div>
+    <div className="bg-gray-300 py-6 text-center">
         <p className='text-2xl'>2/8（土）</p>
         <p>今日の消費カロリー</p>
         <h1 className="text-5xl text-yellow-500 font-bold mt-2">789kcal</h1>
@@ -81,8 +81,8 @@ const Home = () => {
             </div>
         </div>
       </div>
-    </div>
+      </div>
   )
 }
 
-export default Home
+export default EditProfile
