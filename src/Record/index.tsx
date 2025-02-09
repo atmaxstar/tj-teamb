@@ -22,7 +22,7 @@ const Record = () => {
       tileContent={({ date, view }) =>
         view === "month" && date.getDate() === 15 ? (
             <div className='w-full relative h-full'>
-                <img className='absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2' src={imgUrl} alt="Running" style={{ width: 20, height: 20 }} />
+                <img className='absolute -top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2' src={imgUrl} alt="Running" style={{ width: 20, height: 20 }} />
             </div>
         ) : null
       }
