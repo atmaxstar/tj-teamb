@@ -1,3 +1,4 @@
+import { Page } from "../App";
 
 const IconButton = ({
     icon,
@@ -6,9 +7,9 @@ const IconButton = ({
     setPage,
   }: {
     icon: string;
-    name: "home" | "dashboard" | "record";
+    name: Page;
     page: string;
-    setPage: React.Dispatch<React.SetStateAction<"home" | "dashboard" | "record">>;
+    setPage: React.Dispatch<React.SetStateAction<Page>>;
   }) => {
     return (
       <button

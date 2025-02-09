@@ -3,11 +3,12 @@ import IconButton from './IconButton';
 import calendarImg from './calendar.svg';
 import chartImg from './chart.svg';
 import homeImg from './home.svg';
+import { Page } from '../App';
 
 
 interface Props {
-    page: "home" | "dashboard" | "record";
-    setPage: React.Dispatch<React.SetStateAction<"home" | "dashboard" | "record">>;
+    page: Page;
+    setPage: React.Dispatch<React.SetStateAction<Page>>;
 }
 
 const Footer = ({page, setPage}: Props) => {
