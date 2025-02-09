@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditProfile from './EditProfile';
 import ViewProfile from './ViewProfile';
 import HeaderCard from './HeaderCard';
@@ -27,8 +27,22 @@ type ProfileData = {
   trainingData: TrainingRecord[];
 };
 
-const Home = () => {
+// Date型をyyyymmddの数字に変換する
+const convertToNumberDate = (date: Date) => {
+  const year = date.getFullYear(); // 年
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 月 (0から始まるため +1)
+  const day = String(date.getDate()).padStart(2, '0'); // 日
+
+  return Number(`${year}${month}${day}`);
+}
+interface Props {
+  dataPerDay: {[key: number]:ProfileData};
+  setData: (data: ProfileData, date: number) => void;
+}
+
+const Home = ({dataPerDay, setData}: Props) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [date, setDate] = useState<Date>(new Date());
 
   // 最初に表示するダミーデータ
   const [profileData, setProfileData] = useState<ProfileData>({
@@ -42,11 +56,19 @@ const Home = () => {
       calf: 35,
     },
     trainingData: [
-      { name: 'ベンチプレス', weight: 30, reps: 10, sets: 3 },
-      { name: 'スクワット', weight: 40, reps: 10, sets: 3 },
-      { name: 'ランニング', weight: 0,  reps: 30, sets: 0 }, // 30分を回数扱いなど例
+      // { name: 'ベンチプレス', weight: 30, reps: 10, sets: 3 },
+      // { name: 'スクワット', weight: 40, reps: 10, sets: 3 },
+      // { name: 'ランニング', weight: 0,  reps: 30, sets: 0 }, // 30分を回数扱いなど例
     ],
   });
+  
+  // 日付が変わったら既存のデータを読み込む
+  useEffect(() => {
+    const numberDate = convertToNumberDate(date);
+    if (numberDate in dataPerDay){
+      setProfileData(dataPerDay[numberDate]);
+    }
+  }, [date])
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -55,12 +77,13 @@ const Home = () => {
   const handleSave = (updatedData: ProfileData) => {
     // 編集を保存するタイミングで親の state を更新
     setProfileData(updatedData);
+    setData(updatedData, convertToNumberDate(date));
     setIsEditing(false);
   };
 
   return (
     <div className="bg-white min-h-screen">
-      <HeaderCard />
+      <HeaderCard date={date} setDate={setDate}/>
       {isEditing ? (
         <EditProfile 
           profileData={profileData}
