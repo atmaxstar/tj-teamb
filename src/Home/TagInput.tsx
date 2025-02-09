@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-type Exercise = {
+type TrainingRecord = {
   name: string;
-  value: string;  // kgや回数などユーザーが入力する値
+  weight: number;
+  reps: number;
+  sets: number;
+};
+
+type TagInputProps = {
+  trainingData: TrainingRecord[];
+  onTrainingDataChange: (newData: TrainingRecord[]) => void;
 };
 
 const muscleMenu = [
@@ -18,66 +25,55 @@ const muscleMenu = [
   "プランク",
 ];
 
-const ExerciseInput: React.FC = () => {
-  const [inputValue, setInputValue] = useState(""); 
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  
-  // ユーザーが選択したメニュー + 入力値を管理
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+const TagInput: React.FC<TagInputProps> = ({
+  trainingData,
+  onTrainingDataChange,
+}) => {
+  const [inputValue, setInputValue] = React.useState("");
 
   // 入力欄が変化したとき
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    // 入力が空でなければ、候補をフィルタリング
-    if (value.trim() !== "") {
-      const filtered = muscleMenu.filter(
-        (menu) =>
-          menu.toLowerCase().includes(value.toLowerCase()) &&
-          !exercises.some((ex) => ex.name === menu) // まだ選択していないメニューのみ
-      );
-      setSuggestions(filtered);
-    } else {
-      setSuggestions([]);
-    }
+    setInputValue(e.target.value);
   };
 
   // 候補をクリックしてメニュー追加
   const addExercise = (menuName: string) => {
-    // まだ追加されていない場合のみ
-    if (!exercises.some((ex) => ex.name === menuName)) {
-      setExercises([...exercises, { name: menuName, value: "" }]);
-    }
+    // まだ追加されていない場合のみ追加などのロジックは任意で
+    const newExercises = [
+      ...trainingData,
+      { name: menuName, weight: 0, reps: 0, sets: 0 },
+    ];
+    onTrainingDataChange(newExercises);
     setInputValue("");
-    setSuggestions([]);
   };
 
-  // ユーザーが入力値を変更したとき (kg、回数など)
-  const handleValueChange = (index: number, newValue: string) => {
-    setExercises((prev) => {
-      const updated = [...prev];
-      updated[index] = { ...updated[index], value: newValue };
-      return updated;
-    });
+  // 入力値(重量, 回数, セット数)を変更したとき
+  const handleExerciseChange = (
+    index: number,
+    field: "weight" | "reps" | "sets",
+    value: number
+  ) => {
+    const newData = [...trainingData];
+    newData[index] = { ...newData[index], [field]: value };
+    onTrainingDataChange(newData);
   };
 
-  // 記録ボタン押下
-  const handleRecord = (exercise: Exercise) => {
-    console.log("記録:", exercise);
-    // TODO: ここでAPI等に送信処理を書く
-  };
-
-  // メニューを削除したい場合（任意）
   const removeExercise = (index: number) => {
-    setExercises((prev) => prev.filter((_, i) => i !== index));
+    const newData = trainingData.filter((_, i) => i !== index);
+    onTrainingDataChange(newData);
   };
+
+  // メニュー候補のフィルタリング
+  const suggestions = inputValue
+    ? muscleMenu.filter((menu) =>
+        menu.toLowerCase().includes(inputValue.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="w-full mx-auto">
       <h1 className="text-lg mb-4 mt-4">トレーニングメニューを追加</h1>
 
-      {/* Autocomplete入力部分 */}
       <div className="relative mb-6">
         <input
           type="text"
@@ -103,31 +99,54 @@ const ExerciseInput: React.FC = () => {
 
       {/* 選択されたメニュー一覧 */}
       <div className="space-y-4">
-        {exercises.map((exercise, index) => (
-          <div key={exercise.name} className="flex items-center space-x-4">
-            {/* メニュー名 */}
+        {trainingData.map((exercise, index) => (
+          <div
+            key={`${exercise.name}-${index}`}
+            className="flex items-center space-x-4"
+          >
             <label className="w-28 text-gray-800 font-semibold">
               {exercise.name}
             </label>
 
-            {/* kgや回数などの入力 */}
-            <input
-              type="text"
-              placeholder="kg / 回数など"
-              className="border border-gray-300 p-2 flex-1 rounded"
-              value={exercise.value}
-              onChange={(e) => handleValueChange(index, e.target.value)}
-            />
+            <div className="flex items-center space-x-1">
+              <input
+                type="number"
+                placeholder="重量"
+                className="border border-gray-300 p-2 w-16 rounded"
+                value={exercise.weight}
+                onChange={(e) =>
+                  handleExerciseChange(index, "weight", parseFloat(e.target.value) || 0)
+                }
+              />
+              <span>kg</span>
+            </div>
 
-            {/* 記録ボタン */}
-            <button
-              className="bg-black text-white px-3 py-2 rounded"
-              onClick={() => handleRecord(exercise)}
-            >
-              記録
-            </button>
+            <div className="flex items-center space-x-1">
+              <input
+                type="number"
+                placeholder="回数"
+                className="border border-gray-300 p-2 w-16 rounded"
+                value={exercise.reps}
+                onChange={(e) =>
+                  handleExerciseChange(index, "reps", parseInt(e.target.value) || 0)
+                }
+              />
+              <span>回</span>
+            </div>
 
-            {/* 削除ボタン（任意で実装） */}
+            <div className="flex items-center space-x-1">
+              <input
+                type="number"
+                placeholder="セット数"
+                className="border border-gray-300 p-2 w-16 rounded"
+                value={exercise.sets}
+                onChange={(e) =>
+                  handleExerciseChange(index, "sets", parseInt(e.target.value) || 0)
+                }
+              />
+              <span>セット</span>
+            </div>
+
             <button
               className="text-red-500 hover:text-red-700"
               onClick={() => removeExercise(index)}
@@ -141,4 +160,4 @@ const ExerciseInput: React.FC = () => {
   );
 };
 
-export default ExerciseInput;
+export default TagInput;
