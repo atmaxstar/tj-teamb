@@ -13,13 +13,15 @@ function App() {
   const [page, setPage] = useState<Page>("record")
 
   return (
-    <div className='w-full flex justify-center pb-20'>
+    <div className='w-full flex justify-center'>
       <div className='w-[375px]'>
-        <Header page={page} />
+        <Header page={page} setPage={setPage}/>
+        <div className='mt-20 mb-20'>
         {page === "home" && <Home/>}
         {page === "record" && <Record/>}
         {page === "dashboard" && <CalorieWeightChart/>}
         {page === "mypage" && <Mypage/>}
+        </div>
         <Footer page={page} setPage={setPage} />
       </div>
     </div>
