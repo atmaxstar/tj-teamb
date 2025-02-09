@@ -9,7 +9,7 @@ import Header from './Header'
 
 export type Page = "home"|"dashboard"|"record"|"mypage"
 
-interface ProfileDataPerDay {
+export interface ProfileDataPerDay {
   [key : number]: ProfileData;
 }
 
@@ -17,25 +17,19 @@ function App() {
   const [page, setPage] = useState<Page>("record")
   const [dataPerDay, setDataPerDay] = useState<ProfileDataPerDay>({})
 
-  const setData = (data: ProfileDataPerDay, date: number) => {
+  const setData = (data: ProfileData, date: number) => {
     setDataPerDay(prev => {
-      return {
-        ...prev,
-        date: data
-      }
+      prev[date] = data
+      return prev
     })
   }
 
   return (
     <div className='w-full flex justify-center'>
       <div className='w-[375px]'>
-<<<<<<< HEAD
-        {page === "home" && <Home dataPerDay={dataPerDay} setData={setData}/>}
-=======
         <Header page={page} setPage={setPage}/>
         <div className='mt-20 mb-20'>
-        {page === "home" && <Home/>}
->>>>>>> c2b3ebfc230965845fa06e4b45d8c1ec846e2447
+        {page === "home" && <Home dataPerDay={dataPerDay} setData={setData}/>}
         {page === "record" && <Record/>}
         {page === "dashboard" && <CalorieWeightChart/>}
         {page === "mypage" && <Mypage/>}

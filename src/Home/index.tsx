@@ -44,8 +44,7 @@ const Home = ({dataPerDay, setData}: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
 
-  // 最初に表示するダミーデータ
-  const [profileData, setProfileData] = useState<ProfileData>({
+  const initData = {
     bodyData: {
       weight: 60,
       bodyFat: 15,
@@ -60,13 +59,20 @@ const Home = ({dataPerDay, setData}: Props) => {
       // { name: 'スクワット', weight: 40, reps: 10, sets: 3 },
       // { name: 'ランニング', weight: 0,  reps: 30, sets: 0 }, // 30分を回数扱いなど例
     ],
-  });
+  }
+
+  // 最初に表示するダミーデータ
+  const [profileData, setProfileData] = useState<ProfileData>(initData);
   
   // 日付が変わったら既存のデータを読み込む
   useEffect(() => {
+    console.log(dataPerDay);
     const numberDate = convertToNumberDate(date);
     if (numberDate in dataPerDay){
       setProfileData(dataPerDay[numberDate]);
+    }
+    else{
+      setProfileData(initData);
     }
   }, [date])
 
