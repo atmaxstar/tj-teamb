@@ -60,7 +60,6 @@ const EditProfile: React.FC<EditProfileProps> = ({ profileData, onSave }) => {
       {/* カラダの記録 */}
       <div className="mb-8 w-[480px]">
         <h4 className="text-lg font-semibold mb-2">カラダの記録</h4>
-
         <div className="flex items-center mb-2 space-x-4">
           <label className="w-28" htmlFor="weight">体重</label>
           <input
@@ -87,7 +86,8 @@ const EditProfile: React.FC<EditProfileProps> = ({ profileData, onSave }) => {
           />
         </div>
 
-        {/* 胸囲など他の項目も同様に実装 */}
+        <div className="mb-8 w-[480px]"></div>
+        <h4 className="text-lg font-semibold mb-2">体型の記録</h4>
         <div className="flex items-center mb-2 space-x-4">
           <label className="w-28" htmlFor="chest">胸囲</label>
           <input
@@ -150,19 +150,11 @@ const EditProfile: React.FC<EditProfileProps> = ({ profileData, onSave }) => {
             onChange={(e) => handleInputChange(e, 'chest')}
           />
         </div>
-
       </div>
 
       {/* トレーニングの記録（TagInputなど） */}
       <div className="mb-8 w-[480px]">
         <h4 className="text-lg font-semibold mb-2">トレーニングの記録</h4>
-        {/* 
-          TagInput の中身でも同様に 
-          editedTraining, setEditedTraining 
-          を使って編集できるようにします。
-          例として <TagInput /> をカスタムし
-          propsで読み書きするようにする。
-        */}
         <TagInput 
           trainingData={editedTraining}
           onTrainingDataChange={setEditedTraining}
