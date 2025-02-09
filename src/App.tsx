@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Home from './Home'
 import Record from './Record'
+import Footer from './Footer'
 
 function App() {
   const [page, setPage] = useState<"home"|"dashboard"|"record">("record")
@@ -10,6 +11,7 @@ function App() {
       <div className='w-[375px]'>
         {page === "home" && <Home/>}
         {page === "record" && <Record/>}
+        <Footer page={page} setPage={setPage} />
       </div>
     </div>
   )
