@@ -30,7 +30,7 @@ function App() {
         <Header page={page} setPage={setPage}/>
         <div className='mt-20 mb-20'>
         {page === "home" && <Home dataPerDay={dataPerDay} setData={setData}/>}
-        {page === "record" && <Record/>}
+        {page === "record" && <Record profileDataPerDay={dataPerDay}/>}
         {page === "dashboard" && <CalorieWeightChart/>}
         {page === "mypage" && <Mypage/>}
         </div>

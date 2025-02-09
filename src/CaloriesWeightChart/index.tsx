@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -110,6 +110,7 @@ const CalorieWeightChart = () => {
   };
 
   const handleClick = (e: ChartEvent, elements: ActiveElement[]) => {
+    console.log(e)
     if (elements.length > 0) {
       const elementIndex = elements[0].index; // クリックされたデータポイントのインデックス
 
