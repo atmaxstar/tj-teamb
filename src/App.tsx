@@ -5,6 +5,7 @@ import CalorieWeightChart from './CaloriesWeightChart'
 import Record from './Record'
 import Footer from './Footer'
 import Mypage from "./Mypage";    
+import Header from './Header'
 
 export type Page = "home"|"dashboard"|"record"|"mypage"
 
@@ -14,6 +15,7 @@ function App() {
   return (
     <div className='w-full flex justify-center pb-20'>
       <div className='w-[375px]'>
+        <Header page={page} />
         {page === "home" && <Home/>}
         {page === "record" && <Record/>}
         {page === "dashboard" && <CalorieWeightChart/>}

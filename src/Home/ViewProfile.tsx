@@ -37,7 +37,7 @@ const ViewProfile: React.FC<ViewProfileProps> = ({ profileData, onEdit }) => {
         <h3 className="text-xl font-bold text-center">記録</h3>
         <button
           onClick={onEdit}
-          className="flex text-xl items-center absolute right-10 top-0 mt-2"
+          className="flex text-lg items-center absolute right-10 top-2 mt-2"
         >
           <span className="font-bold mr-1">編集する</span>
           <FaPencilAlt size={20} />
