@@ -87,9 +87,56 @@ const Home = ({dataPerDay, setData}: Props) => {
     setIsEditing(false);
   };
 
+  const MET_TABLE: Record<string, number> = {
+    'ベンチプレス': 6,
+    'スクワット': 8,
+    'デッドリフト': 8,
+    'ランニング': 8,
+    'プッシュアップ': 5,
+    'ダンベルカール': 4,
+    'ショルダープレス': 5,
+    '懸垂': 5,
+    'レッグプレス': 5,
+    'プランク': 4,
+  };
+
+  const calculateCalories = (profile: ProfileData): number => {
+    let total = 0;
+    const userWeight = profile.bodyData.weight;
+
+    for (const record of profile.trainingData) {
+      // メニュー名から MET を推定 (無ければ 5 とする)
+      const baseMET = MET_TABLE[record.name] ?? 5;
+      
+      // 重量に応じて多少 MET を補正したい場合はこんなイメージ
+      // 例えば「(使用重量 / 40)」でプラスアルファ
+      // (あくまで適当な例)
+      const weightFactor = record.weight > 0 
+        ? (record.weight / 40) 
+        : 0;
+
+      // 最終的な MET
+      const met = baseMET + weightFactor;
+
+      // 1レップ3秒 × (reps × sets)
+      const totalSeconds = record.reps * record.sets * 3;
+      const totalHours = totalSeconds / 3600;
+
+      // カロリー = MET × 体重 × 時間
+      const kcal = met * userWeight * totalHours;
+      total += kcal;
+    }
+
+    // 小数を四捨五入
+    return Math.round(total);
+  };
+
+  // 計算結果を算出
+  const totalCalories = calculateCalories(profileData);
+
   return (
     <div className="bg-white min-h-screen">
-      <HeaderCard date={date} setDate={setDate}/>
+      <HeaderCard date={date} setDate={setDate} totalCalories={totalCalories}/>
       {isEditing ? (
         <EditProfile 
           profileData={profileData}

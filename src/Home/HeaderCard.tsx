@@ -3,9 +3,10 @@ import React from 'react'
 interface Props {
   date: Date;
   setDate: React.Dispatch<React.SetStateAction<Date>>;
+  totalCalories: number;
 }
 
-const HeaderCard = ({date, setDate}: Props) => {
+const HeaderCard = ({date, setDate, totalCalories}: Props) => {
 
   const changeDate = (direction: "prev" | "next") => {
     const newDate = new Date(date);
@@ -38,7 +39,7 @@ const HeaderCard = ({date, setDate}: Props) => {
         </button>
       </div>
       <p>今日の消費カロリー</p>
-      <h1 className="text-5xl text-yellow-500 font-bold mt-2">789kcal</h1>
+      <h1 className="text-5xl text-yellow-500 font-bold mt-2"><span>{totalCalories}</span>kcal</h1>
     </div>
   )
 }
