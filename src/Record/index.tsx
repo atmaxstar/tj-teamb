@@ -36,7 +36,7 @@ const Record = ({profileDataPerDay}: Props) => {
   }
 
   return (
-    <div className='flex flex-col w-full justify-center'>
+    <div className='flex flex-col w-full items-center justify-center'>
       
     <Calendar
       onChange={handleChange}
