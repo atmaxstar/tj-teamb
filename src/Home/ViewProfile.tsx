@@ -45,7 +45,7 @@ const ViewProfile: React.FC<ViewProfileProps> = ({ profileData, onEdit }) => {
       </div>
 
       {/* カラダの記録 */}
-      <div className="mb-8 w-[480px]">
+      <div className="mb-8 w-[375px]">
         <h4 className="text-lg font-semibold mb-2">カラダの記録</h4>
         <div className="flex items-center mb-2 space-x-4">
           <label className="w-28">体重</label>
@@ -60,7 +60,7 @@ const ViewProfile: React.FC<ViewProfileProps> = ({ profileData, onEdit }) => {
           </span>
         </div>
         </div>
-        <div className="mb-8 w-[480px]">
+        <div className="mb-8 w-[375px]">
         <h4 className="text-lg font-semibold mb-2">体型の記録</h4>
         <div className="flex items-center mb-2 space-x-4">
           <label className="w-28">胸囲</label>
@@ -95,7 +95,7 @@ const ViewProfile: React.FC<ViewProfileProps> = ({ profileData, onEdit }) => {
       </div>
 
       {/* トレーニングの記録 */}
-      <div className="mb-8 w-[480px]">
+      <div className="mb-8 w-[375px]">
         <h4 className="text-lg font-semibold mb-2">トレーニングの記録</h4>
         <div className="flex flex-col gap-2">
           {trainingData.map((record, idx) => (
