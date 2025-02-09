@@ -12,7 +12,7 @@ function App() {
   const [page, setPage] = useState<Page>("record")
 
   return (
-    <div className='w-full flex justify-center'>
+    <div className='w-full flex justify-center pb-20'>
       <div className='w-[375px]'>
         {page === "home" && <Home/>}
         {page === "record" && <Record/>}
