@@ -12,6 +12,7 @@ function App() {
       <div className='w-[375px]'>
         {page === "home" && <Home/>}
         {page === "record" && <Record/>}
+        {page === "dashboard" && <CalorieWeightChart/>}
         <Footer page={page} setPage={setPage} />
       </div>
     </div>

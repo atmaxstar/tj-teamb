@@ -10,6 +10,9 @@ import {
   Tooltip,
   LineController,
   BarController,
+  ChartOptions,
+  ChartEvent,
+  ActiveElement,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import WeightCalorieInfo from './WeightCalorieInfo';
@@ -31,6 +34,8 @@ ChartJS.register(
 
 const CalorieWeightChart = () => {
   const [tab, setTab] = useState<"week"|"month"|"three"|"six">("month");const [labels, setLabels] = useState<string[]>([]);
+  const [clickedHeight, setClickedHeight] = useState<number>(0);
+  const [clickedWeight, setClickedWeight] = useState<number>(0);
 
   useEffect(() => {
     const generateLabels = (range: number) => {
@@ -63,7 +68,7 @@ const CalorieWeightChart = () => {
     datasets: [
       {
         type: 'line' as const,
-        label: '身長',
+        label: '消費カロリー',
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2,
         fill: false,
@@ -79,14 +84,51 @@ const CalorieWeightChart = () => {
       }
     ],
   };
-  
+ 
+  const options: ChartOptions<"bar" | "line"> = {
+    scales: {
+      y1: {
+        position: "left", // 身長の Y 軸を左側に配置
+        ticks: {
+          // 身長の軸の目盛りに色をつける
+          callback: (value) => `${value}`,  // 数値をそのまま表示
+          color: "rgb(255, 99, 132)",  // 赤色
+        },
+      },
+      y2: {
+        position: "right", // 体重の Y 軸を右側に配置
+        grid: {
+          drawOnChartArea: false, // 体重の Y 軸にはグリッド線を描画しない
+        },
+        ticks: {
+          // 体重の軸の目盛りに色をつける
+          callback: (value) => `${value}`,  // 数値をそのまま表示
+          color: "rgb(75, 192, 192)",  // 緑色
+        },
+      },
+    },
+  };
+
+  const handleClick = (e: ChartEvent, elements: ActiveElement[]) => {
+    if (elements.length > 0) {
+      const elementIndex = elements[0].index; // クリックされたデータポイントのインデックス
+
+      // 身長と体重の値を両方同時にセット
+      const clickedHeightValue = data.datasets[0].data[elementIndex]; // 身長の値
+      const clickedWeightValue = data.datasets[1].data[elementIndex]; // 体重の値
+
+      setClickedHeight(clickedHeightValue); // 身長の値を保存
+      setClickedWeight(clickedWeightValue); // 体重の値を保存
+    }
+  };
+
   return (
     <div className='flex w-full flex-col'>
     <div className='flex w-full justify-center text-2xl bg-slate-200'>
       2024年6月9日
     </div>
-      <WeightCalorieInfo/>
-      <Chart type='bar' data={data} />
+      <WeightCalorieInfo weight={clickedWeight} cal={clickedHeight}/>
+      <Chart type='bar' data={data} options={{ ...options, onClick: handleClick }}/>
       <Tab tab={tab} setTab={setTab}/>
     </div>
   )
