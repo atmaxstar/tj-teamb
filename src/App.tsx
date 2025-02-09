@@ -6,10 +6,12 @@ function App() {
   const [page, setPage] = useState<"home"|"dashboard"|"record">("record")
 
   return (
-    <>
-    {page === "home" && <Home/>}
-    {page === "record" && <Record/>}
-    </>
+    <div className='w-full flex justify-center'>
+      <div className='w-[375px]'>
+        {page === "home" && <Home/>}
+        {page === "record" && <Record/>}
+      </div>
+    </div>
   )
 }
 

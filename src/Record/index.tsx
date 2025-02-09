@@ -21,25 +21,30 @@ const Record = () => {
       value={date}
       tileContent={({ date, view }) =>
         view === "month" && date.getDate() === 15 ? (
-          <img src={imgUrl} alt="Running" style={{ width: 20, height: 20 }} />
+            <div className='w-full relative h-full'>
+                <img className='absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2' src={imgUrl} alt="Running" style={{ width: 20, height: 20 }} />
+            </div>
         ) : null
       }
     />
 
     <div className='flex flex-col justify-start w-full'>
-      <p className='text-xl'>部位</p>
-      <div className='flex justify-between text-xl'>
-        <p>胸</p>
-        <div className='flex gap-3'>
-          <p>2/27</p>
-          <p className='text-xs'>2日前</p>
+      <p className='text-xl py-2'>部位</p>
+      <div className=' bg-gray-200 w-full h-[2px]'/>
+      <div className='p-2'>
+        <div className='flex justify-between text-xl'>
+            <p>胸</p>
+            <div className='flex items-center gap-3'>
+                <p>2/27</p>
+                <p className='text-xs'>2日前</p>
+            </div>
         </div>
-      </div>
-      <div className='flex justify-between text-xl'>
-        <p>肩</p>
-        <div className='flex gap-3'>
-          <p>2/28</p>
-          <p className='text-xs'>1日前</p>
+        <div className='flex justify-between text-xl'>
+            <p>肩</p>
+            <div className='flex items-center gap-3'>
+                <p>2/28</p>
+                <p className='text-xs'>1日前</p>
+            </div>
         </div>
       </div>
     </div>
