@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Home from './Home'
+import CalorieWeightChart from './CaloriesWeightChart'
 import Record from './Record'
 
 function App() {
